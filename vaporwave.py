@@ -8,7 +8,7 @@ st.sidebar.info("🔥solo entregas en Bogota y Neiva")
 st.sidebar.warning("🔞 Venta exclusiva para mayores de 18 años")
 
 # 2. Encabezado principal
-st.title("𝐕𝐚𝐩𝐨𝐫𝐬.𝐖𝐚𝐯𝐞𝐬")
+st.title(":rainbow[𝐕𝐚𝐩𝐨𝐫𝐬.𝐖𝐚𝐯𝐞𝐬]")
 st.markdown("Bienvenido a :violet[𝐕𝐚𝐩𝐨𝐫𝐬.𝐖𝐚𝐯𝐞𝐬] — recargas y vapes de :rainbow[todos los sabores]")
 
 precios = {
