@@ -3,8 +3,8 @@ import requests
 
 # 1. Barra lateral desplegable
 st.sidebar.title("𝐕𝐚𝐩𝐨𝐫𝐬.𝐖𝐚𝐯𝐞𝐬")
-st.sidebar.info("🚚 Envíos rápidos en toda la ciudad")
-st.sidebar.info("solo entregas Bogota y Neiva")
+st.sidebar.info("🚚 Envíos rápidos en toda la ciudad🔥")
+st.sidebar.info("🔥solo entregas Bogota y Neiva🔥")
 st.sidebar.warning("🔞 Venta exclusiva para mayores de 18 años")
 
 # 2. Encabezado principal
@@ -24,7 +24,7 @@ descripciones = {
     "fresa": "🍓 Suave y cremoso estilo batido",
     "sandia": "🍉 Súper refrescante para todo el día",
     "menta": "❄️ Golpe helado de frescura pura",
-    "cereza": "🍒 Ácido y vibrante con aroma dulce"
+    "cereza": "🍒🔥Ácido y vibrante con aroma dulce"
 }
 
 st.divider()
