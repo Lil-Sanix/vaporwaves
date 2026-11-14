@@ -1,5 +1,5 @@
 import streamlit as st
-import urllib.parse
+import requests
 
 # 1. Barra lateral desplegable
 st.sidebar.title("𝐕𝐚𝐩𝐨𝐫𝐬.𝐖𝐚𝐯𝐞𝐬")
@@ -45,40 +45,48 @@ with col2:
 
 st.divider()
 
-# 4. Datos del cliente y envío del pedido a WhatsApp
+# 4. Datos del cliente y envío instantáneo a tu celular por ntfy
 nombre = st.text_input("Tu nombre:")
+celular_cliente = st.text_input("Tu número de WhatsApp:")
 direccion = st.text_input("Dirección de entrega:")
-numero = st.text_input("Numero de whatsapp de comprador")
-
-# Pon aquí tu número con código de país, SIN signo + y SIN espacios (ej. 57 para Colombia)
-telefono_tienda = "573005729161"
 
 if st.button("Confirmar pedido"):
-    if nombre == "" or direccion == "":
+    if nombre == "" or celular_cliente == "" or direccion == "":
         st.toast("⚠️ Faltan datos por llenar")
-        st.warning("Por favor escribe tu nombre y dirección antes de confirmar.")
+        st.warning("Por favor escribe tu nombre, WhatsApp y dirección antes de confirmar.")
     else:
-        st.balloons()
-        st.success(f"¡Listo, {nombre}! Presiona el botón verde de abajo para enviarnos tu pedido por WhatsApp:")
+        tema = st.secrets["NTFY_TEMA"]
 
-        # Armamos el texto del recibo usando \n para bajar de renglón
         mensaje = (
-            f"¡Hola Vapors.Waves! Quiero hacer un pedido:\n"
-            f"- Cliente: {nombre}\n"
-            f"- Sabor: {sabor}\n"
-            f"- Cantidad: {cantidad} vape(s)\n"
-            f"- Dirección: {direccion}\n"
-            f"- numero: {numero}\n"
-            f"- Total a pagar: ${total:,}"
+            f"Cliente: {nombre}\n"
+            f"WhatsApp: {celular_cliente}\n"
+            f"Sabor: {sabor}\n"
+            f"Cantidad: {cantidad} vape(s)\n"
+            f"Dirección: {direccion}\n"
+            f"Total a pagar: ${total:,}"
         )
 
-        # Convertimos el texto para que no rompa el enlace web
-        mensaje_url = urllib.parse.quote(mensaje)
-        enlace_whatsapp = f"https://wa.me/{telefono_tienda}?text={mensaje_url}"
+        # Limpiamos espacios o guiones del celular para armar el botón directo a WhatsApp
+        numero_limpio = celular_cliente.replace(" ", "").replace("+", "").replace("-", "")
+        if len(numero_limpio) == 10:
+            numero_limpio = "57" + numero_limpio
 
-        # Dibujamos el botón que abre tu chat
-        st.link_button("📲 Enviar pedido a WhatsApp", enlace_whatsapp)
+        encabezados = {
+            "Title": f"Nuevo Pedido: {cantidad}x {sabor}",
+            "Priority": "urgent",
+            "Tags": "rotating_light,shopping_cart",
+            "Actions": f"view, Escribir por WhatsApp, https://wa.me/{numero_limpio}"
+        }
 
+        with st.spinner("Enviando tu pedido a la tienda..."):
+            respuesta = requests.post(
+                f"https://ntfy.sh/{tema}",
+                data=mensaje.encode("utf-8"),
+                headers=encabezados
+            )
 
-
- 
+        if respuesta.status_code == 200:
+            st.balloons()
+            st.success(f"¡Pedido recibido, {nombre}! Ya nos llegó tu orden y te escribiremos al {celular_cliente} para coordinar la entrega.")
+        else:
+            st.error("Hubo un problema enviando el pedido. Intenta nuevamente.")
