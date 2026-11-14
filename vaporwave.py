@@ -48,6 +48,7 @@ st.divider()
 # 4. Datos del cliente y envío del pedido a WhatsApp
 nombre = st.text_input("Tu nombre:")
 direccion = st.text_input("Dirección de entrega:")
+numero = st.text_input("Numero de whatsapp de comprador")
 
 # Pon aquí tu número con código de país, SIN signo + y SIN espacios (ej. 57 para Colombia)
 telefono_tienda = "573005729161"
@@ -67,6 +68,7 @@ if st.button("Confirmar pedido"):
             f"- Sabor: {sabor}\n"
             f"- Cantidad: {cantidad} vape(s)\n"
             f"- Dirección: {direccion}\n"
+            f"- numero: {numero}\n"
             f"- Total a pagar: ${total:,}"
         )
 
