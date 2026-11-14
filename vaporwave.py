@@ -50,7 +50,7 @@ nombre = st.text_input("Tu nombre:")
 direccion = st.text_input("Dirección de entrega:")
 
 # Pon aquí tu número con código de país, SIN signo + y SIN espacios (ej. 57 para Colombia)
-telefono_tienda = "573001234567"
+telefono_tienda = "573005729161"
 
 if st.button("Confirmar pedido"):
     if nombre == "" or direccion == "":
